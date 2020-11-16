@@ -21,6 +21,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT1 }}
-          repository: weide-zhou/ticket13
+          repository: joemon-david/UITestAutomationSample
           event-type: my-event
           client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'
