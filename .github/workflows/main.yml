@@ -1,14 +1,28 @@
 name: PRnew
 on: [pull_request]
-  
+env:
+  CX_REPORT_NAME: checkmarx_${{github.event.number}}_${{github.event.pull_request.created_at}}_${{github.run_number}}.pdf
 jobs:
   job1:
     runs-on: [ubuntu-latest]
+    outputs:
+      date_formated: ${{steps.stepTime.outputs.dateF}}
     steps:
+      - name: Get Current Time        
+        uses: srfrnk/current-time@master
+        id: currentTime
+        with:
+          format: YYYYMMDDMMSS
+      - name: Set Date as Output
+        id: stepTime
+        env:
+          F_TIME: "${{ steps.currentTime.outputs.formattedTime }}"
+        run: echo "::set-output name=dateF::$F_TIME"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          TIME: "${{steps.currentTime.outputs.time}}"          
+        run: echo $CX_REPORT_NAME   $TIME $F_TIME "$GITHUB_CONTEXT"
       - shell: bash
         run: |
           expr 3 + 7 > math-homework.txt
@@ -23,4 +37,10 @@ jobs:
           token: ${{ secrets.PAT1 }}
           repository: joemon-david/UITestAutomationSample
           event-type: my-event
-          client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'
+          client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'          
+  get_date_value:
+    needs: [job1]
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: print the date value in console
+        run: echo  $CX_REPORT_NAME ${{needs.job1.outputs.date_formated}}
