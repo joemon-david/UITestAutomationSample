@@ -36,4 +36,4 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: print the date value in console
-        run: echo $F_TIME
+        run: echo $F_TIME   -    $TIME
