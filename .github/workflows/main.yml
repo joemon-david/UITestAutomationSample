@@ -32,6 +32,7 @@ jobs:
           event-type: my-event
           client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'          
   get_date_value:
+    needs: [job1]
     runs-on: [ubuntu-latest]
     steps:
       - name: print the date value in console
