@@ -1,14 +1,21 @@
 name: PRnew
-on: [pull_request]
+on: [push]
   
 jobs:
   job1:
     runs-on: [ubuntu-latest]
     steps:
+      - name: Get Current Time
+        uses: srfrnk/current-time@master
+        id: currentTime
+        with:
+          format: YYYYMMDDMMSS
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          TIME: "${{steps.currentTime.outputs.time}}"
+          F_TIME: "${{ steps.currentTime.outputs.formattedTime }}"
+        run: echo $TIME $F_TIME "$GITHUB_CONTEXT"
       - shell: bash
         run: |
           expr 3 + 7 > math-homework.txt
