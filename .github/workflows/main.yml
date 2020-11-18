@@ -4,12 +4,15 @@ on: [push]
 jobs:
   job1:
     runs-on: [ubuntu-latest]
+    outputs:
+      date_formated: ${{steps.currentTime.outputs.dateF}}
     steps:
-      - name: Get Current Time
+      - name: Get Current Time        
         uses: srfrnk/current-time@master
         id: currentTime
         with:
           format: YYYYMMDDMMSS
+          run: echo "::set-output name=dateF::${{ steps.currentTime.outputs.formattedTime }}"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -36,4 +39,4 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: print the date value in console
-        run: echo $F_TIME   -    $TIME
+        run: echo ${{needs.job1.outputs.date_formated}}
