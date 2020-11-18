@@ -5,19 +5,22 @@ jobs:
   job1:
     runs-on: [ubuntu-latest]
     outputs:
-      date_formated: ${{steps.currentTime.outputs.dateF}}
+      date_formated: ${{steps.stepTime.outputs.dateF}}
     steps:
       - name: Get Current Time        
         uses: srfrnk/current-time@master
         id: currentTime
         with:
           format: YYYYMMDDMMSS
-          run: echo "::set-output name=dateF::${{ steps.currentTime.outputs.formattedTime }}"
+      - name: Set Date as Output
+        id: stepTime
+        env:
+          F_TIME: "${{ steps.currentTime.outputs.formattedTime }}"
+        run: echo "::set-output name=dateF::$F_TIME"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-          TIME: "${{steps.currentTime.outputs.time}}"
-          F_TIME: "${{ steps.currentTime.outputs.formattedTime }}"
+          TIME: "${{steps.currentTime.outputs.time}}"          
         run: echo $TIME $F_TIME "$GITHUB_CONTEXT"
       - shell: bash
         run: |
