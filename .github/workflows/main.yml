@@ -30,4 +30,9 @@ jobs:
           token: ${{ secrets.PAT1 }}
           repository: joemon-david/UITestAutomationSample
           event-type: my-event
-          client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'
+          client-payload: '{"prnumber": "${{ github.event.number }}", "checkrunid": "${{ github.run_id }}"}'          
+  get_date_value:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: print the date value in console
+        run: echo $F_TIME
