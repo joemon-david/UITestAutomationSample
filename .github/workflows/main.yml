@@ -1,6 +1,7 @@
 name: PRnew
-on: [push]
-  
+on: [pull_request]
+env:
+  CX_REPORT_NAME: checkmarx_${{github.event.number}}_${{github.event.pull_request.created_at}}_${{github.run_number}}.pdf
 jobs:
   job1:
     runs-on: [ubuntu-latest]
@@ -21,7 +22,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           TIME: "${{steps.currentTime.outputs.time}}"          
-        run: echo $TIME $F_TIME "$GITHUB_CONTEXT"
+        run: echo $CX_REPORT_NAME   $TIME $F_TIME "$GITHUB_CONTEXT"
       - shell: bash
         run: |
           expr 3 + 7 > math-homework.txt
@@ -42,4 +43,4 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: print the date value in console
-        run: echo ${{needs.job1.outputs.date_formated}}
+        run: echo  $CX_REPORT_NAME ${{needs.job1.outputs.date_formated}}
