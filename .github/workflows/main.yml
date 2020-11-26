@@ -13,12 +13,12 @@ jobs:
         run: |
           expr 3 + 7 > math-homework.txt
       - name: get version
-        id: version
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-          path: ${{ github.workspace }}/config.json
-          prop_path: 'project_name'
-      - run: echo ${{steps.version.outputs.prop}} 
+      - id: set_var
+        run: |
+          content=`cat ${{ github.workspace }}/config.json`          
+          echo "::set-output name=packageJson::$content"
+      - run: |
+          echo "${{fromJson(steps.set_var.outputs.packageJson).version}}" 
       
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v1
