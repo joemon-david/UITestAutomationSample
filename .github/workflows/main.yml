@@ -16,7 +16,7 @@ jobs:
         id: version
         uses: notiz-dev/github-action-json-property@release
         with: 
-          path: 'config.json'
+          path:  ${{ github.workspace }}'/config.json'
           prop_path: 'project_name'
       - run: echo ${{steps.version.outputs.prop}}
       
