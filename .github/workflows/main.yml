@@ -1,5 +1,5 @@
 name: PRnew
-on: [pull_request]
+on: [push]
   
 jobs:
   job1:
@@ -12,6 +12,14 @@ jobs:
       - shell: bash
         run: |
           expr 3 + 7 > math-homework.txt
+      - name: get version
+        id: version
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: 'config.json'
+          prop_path: 'project_name'
+      - run: echo ${{steps.version.outputs.prop}} 
+      
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v1
         with:
