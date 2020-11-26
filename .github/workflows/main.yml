@@ -3,7 +3,7 @@ on: [push]
   
 jobs:
   job1:
-    runs-on: [ubuntu-latest]
+    runs-on: [ubuntu-latest]    
     steps:
       - name: Dump GitHub context
         env:
@@ -17,8 +17,9 @@ jobs:
         run: |
           content=`cat ${{ github.workspace }}/config.json`          
           echo "::set-output name=packageJson::$content"
-      - run: |
-          echo "${{fromJson(steps.set_var.outputs.packageJson).version}}" 
+      - name:  Echo output   
+        run: |
+          echo "${{fromJson(steps.set_var.outputs.packageJson).project_name}}" 
       
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v1
