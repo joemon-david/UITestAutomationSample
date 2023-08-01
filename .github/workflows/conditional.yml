@@ -8,6 +8,11 @@ on:
         required: true
         default: 'false'
         # Add other validation options if needed
+      create_users:
+        description: 'Create Test Users for Load Testing?'
+        required: true
+        default: 'false'
+        # Add other validation options if needed
       restore:
         description: 'Perform MongoDB restore?'
         required: true
@@ -15,27 +20,36 @@ on:
         # Add other validation options if needed
 
 jobs:
-  mongodb_backup_restore:
-    runs-on: ubuntu-latest
-
+  mongodb_backup:
+    runs-on: ubuntu-latest    
     steps:
-      - name: MongoDB Backup
-        if: ${{ github.event.inputs.backup == 'true' }}
-        run: |
+    
+     - name: MongoDB Backup
+       if: ${{ github.event.inputs.backup == 'true' }}
+       run: |
           # Add your MongoDB backup script here
           # Example: mongodump --uri="mongodb://your-mongodb-connection-string" --out="backup/"
-
-      # Steps to run Azure Load Testing script (replace with actual commands)
-      - name: Azure Load Testing Step 1
-        run: |
-          # Add your Azure Load Testing script here
-
-      - name: Azure Load Testing Step 2
-        run: |
-          # Add your Azure Load Testing script here
-
-      - name: MongoDB Restore
-        if: ${{ github.event.inputs.restore == 'true' }}
-        run: |
+   
+  Test_User_Creation:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test User Creation
+      if: ${{ githu.event.inputs.create_users == 'true' }}
+      run: |
+       # Add Script to create test users
+    
+  Azure_Load_Testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Execute Azure Load Test scripts
+      run: |
+        # Add Steps to execute the Azure Load Testing scripts
+  
+  mongodb_restore:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Mongo DB Restore
+      if: ${{ github.event.inputs.restore == 'true' }}
+      run: |
           # Add your MongoDB restore script here
           # Example: mongorestore --uri="mongodb://your-mongodb-connection-string" "path-to-backup/"
