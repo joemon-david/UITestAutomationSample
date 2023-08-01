@@ -1,0 +1,39 @@
+name: MongoDB Backup and Restore
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mongodb_backup_restore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if backup and restore should be included
+        id: check_options
+        run: echo "backup=${{ github.event.inputs.backup }} restore=${{ github.event.inputs.restore }}" >> $GITHUB_ENV
+
+      # Step to perform MongoDB backup if user selects 'backup'
+      - name: MongoDB Backup
+        if: ${{ env.backup == 'true' }}
+        run: |
+          # Add your MongoDB backup script here
+          # Example: mongodump --uri="mongodb://your-mongodb-connection-string" --out="backup/"
+
+      # Steps to run Azure Load Testing script (replace with actual commands)
+      - name: Azure Load Testing Step 1
+        run: |
+          # Add your Azure Load Testing script here
+
+      - name: Azure Load Testing Step 2
+        run: |
+          # Add your Azure Load Testing script here
+
+      # Step to perform MongoDB restore if user selects 'restore'
+      - name: MongoDB Restore
+        if: ${{ env.restore == 'true' }}
+        run: |
+          # Add your MongoDB restore script here
+          # Example: mongorestore --uri="mongodb://your-mongodb-connection-string" "path-to-backup/"
+
