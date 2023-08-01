@@ -2,19 +2,25 @@ name: MongoDB Backup and Restore
 
 on:
   workflow_dispatch:
+    inputs:
+      backup:
+        description: 'Perform MongoDB backup?'
+        required: true
+        default: 'false'
+        # Add other validation options if needed
+      restore:
+        description: 'Perform MongoDB restore?'
+        required: true
+        default: 'false'
+        # Add other validation options if needed
 
 jobs:
   mongodb_backup_restore:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if backup and restore should be included
-        id: check_options
-        run: echo "backup=${{ github.event.inputs.backup }} restore=${{ github.event.inputs.restore }}" >> $GITHUB_ENV
-
-      # Step to perform MongoDB backup if user selects 'backup'
       - name: MongoDB Backup
-        if: ${{ env.backup == 'true' }}
+        if: ${{ github.event.inputs.backup == 'true' }}
         run: |
           # Add your MongoDB backup script here
           # Example: mongodump --uri="mongodb://your-mongodb-connection-string" --out="backup/"
@@ -28,10 +34,8 @@ jobs:
         run: |
           # Add your Azure Load Testing script here
 
-      # Step to perform MongoDB restore if user selects 'restore'
       - name: MongoDB Restore
-        if: ${{ env.restore == 'true' }}
+        if: ${{ github.event.inputs.restore == 'true' }}
         run: |
           # Add your MongoDB restore script here
           # Example: mongorestore --uri="mongodb://your-mongodb-connection-string" "path-to-backup/"
-
