@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Test User Creation
-      if: ${{ githu.event.inputs.create_users == 'true' }}
+      if: ${{ github.event.inputs.create_users == 'true' }}
       run: |
        # Add Script to create test users
     
