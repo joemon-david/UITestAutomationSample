@@ -20,9 +20,9 @@ jobs:
         id: convert
         run: |
           if [ "${{ github.event.inputs.messaging_module }}" = "true" ]; then
-            echo  "{enable_messaging}={1}" >> "$GITHUB_ENV"
+            echo  "enable_messaging=1" >> "$GITHUB_ENV"
           else
-            echo  "{enable_messaging}={0}" >> "$GITHUB_ENV"
+            echo  "enable_messaging=0" >> "$GITHUB_ENV"
           fi
 
       - name: Print numeric value
