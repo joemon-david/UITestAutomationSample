@@ -8,6 +8,8 @@ on:
         required: true
         type: boolean
         default: false
+env:
+  ENABLE_MESSAGING: ${{ github.event.inputs.messaging_module }}   
 
 jobs:
   user_input_job:
@@ -26,3 +28,4 @@ jobs:
       - name: Print numeric value
         run: |
           echo "$enable_messaging"
+          echo "$ENABLE_MESSAGING"
