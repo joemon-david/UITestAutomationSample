@@ -1,0 +1,28 @@
+name: User Input Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      messaging_module:
+        description: 'Messaging_Module'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  user_input_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Convert boolean input to numeric value
+        id: convert
+        run: |
+          if [ "${{ github.event.inputs.messaging_module }}" = "true" ]; then
+            echo "::set-output name=numeric_value::1"
+          else
+            echo "::set-output name=numeric_value::0"
+          fi
+
+      - name: Print numeric value
+        run: |
+          echo "Numeric value: ${{ steps.convert.outputs.numeric_value }}"
