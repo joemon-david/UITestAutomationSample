@@ -25,4 +25,4 @@ jobs:
 
       - name: Print numeric value
         run: |
-          echo "Numeric value: $enable_messaging"
+          echo "$enable_messaging"
