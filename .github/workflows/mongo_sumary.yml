@@ -25,4 +25,4 @@ jobs:
           DATABASE_NAME: "sample_mflix"
           COLLECTION_NAME: "movies"
           GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
-        run: python scripts.fetch_mongo_data.py
+        run: python scripts/fetch_mongo_data.py
