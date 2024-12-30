@@ -1,0 +1,28 @@
+name: Generate MongoDB Summary Table
+
+on:
+  workflow_dispatch
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install pymongo
+
+      - name: Fetch data and generate summary table
+        env:
+          MONGO_URI: "mongodb+srv://joemondavid:AppleAt123@cluster0.ma2g9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+          DATABASE_NAME: "sample_mflix"
+          COLLECTION_NAME: "movies"
+          GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
+        run: python scripts.fetch_mongo_data.py
