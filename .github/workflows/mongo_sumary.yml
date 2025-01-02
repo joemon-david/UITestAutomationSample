@@ -22,7 +22,7 @@ jobs:
       - name: Fetch data and generate summary table
         env:
           MONGO_URI: "mongodb+srv://joemondavid:AppleAt123@cluster0.ma2g9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-          DATABASE_NAME: "sample_mflix"
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           COLLECTION_NAME: "movies"
           GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
         run: python scripts/fetch_mongo_data.py
